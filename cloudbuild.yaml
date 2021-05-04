@@ -1,21 +1,29 @@
 steps:
 
-- id: 'Running docker-compose'
+- id: 'Run docker-compose'
   name: 'gcr.io/$PROJECT_ID/docker-compose:1.28.2'
   args: ['-f', 'docker-compose.prod.yaml', 'up', '-d']
 
-- id: 'Running docker ps'
+- id: 'Run docker ps'
   name: 'gcr.io/cloud-builders/docker'
   args: ['ps']
 
-- id: 'Running composer'
+- id: 'Run composer'
   name: 'gcr.io/cloud-builders/docker'
   args: ['exec', '-t', 'app', 'composer', 'install']
 
-- id: 'Copying .env'
+- id: 'Copy .env'
   name: 'gcr.io/cloud-builders/docker'
   args: ['exec', '-t', 'app', 'cp', '.env.example', '.env']
 
 - id: 'Generate key'
   name: 'gcr.io/cloud-builders/docker'
   args: ['exec', '-t', 'app', 'php', '/var/www/artisan', 'key:generate']
+
+- id: 'Run migrations'
+  name: 'gcr.io/cloud-builders/docker'
+  args: ['exec', '-t', 'app', 'php', '/var/www/artisan', 'migrate']
+
+- id: 'Run PhpUnit'
+  name: 'gcr.io/cloud-builders/docker'
+  args: ['exec', '-t', 'app', 'php', '/var/www/vendor/bin/phpunit', '-c', '/var/www/phpunit.xml']
