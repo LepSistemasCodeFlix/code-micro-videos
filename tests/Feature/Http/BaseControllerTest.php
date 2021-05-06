@@ -2,12 +2,11 @@
 
 namespace Tests\Feature\Http;
 
-use App\Models\Category;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Tests\Stub\Controller\CategoryControllerStub;
-use Tests\Stub\Models\CategoryStub;
+use Tests\Stub\Controller\BaseControllerStub;
+use Tests\Stub\Models\BaseModelStub;
 use Tests\TestCase;
 
 class BaseControllerTest extends TestCase
@@ -15,16 +14,16 @@ class BaseControllerTest extends TestCase
 
     public function testIndex()
     {
-        CategoryStub::createTable();
+        BaseModelStub::createTable();
 
-        $category = CategoryStub::create(['name' => 'CategoryStub', 'description' => 'Description']);
+        $model = BaseModelStub::create(['name' => 'BaseModelStub', 'description' => 'Description']);
         
-        $controller = new CategoryControllerStub();
+        $controller = new BaseControllerStub();
         $result = $controller->index()->toArray();
 
-        $this->assertNotEqualsCanonicalizing([$category->toArray()], $result);
+        $this->assertNotEqualsCanonicalizing([$model->toArray()], $result);
 
-        CategoryStub::dropTable();
+        BaseModelStub::dropTable();
     }
 
     // public function testShow()

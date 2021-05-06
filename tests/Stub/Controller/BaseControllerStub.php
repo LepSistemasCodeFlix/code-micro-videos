@@ -3,13 +3,13 @@
 namespace Tests\Stub\Controller;
 
 use App\Http\Controllers\BaseController;
-use Tests\Stub\Models\CategoryStub;
+use Tests\Stub\Models\BaseModelStub;
 
-class CategoryControllerStub extends BaseController
+class BaseControllerStub extends BaseController
 {
 
     protected function model()
     {
-        return CategoryStub::class;
+        return BaseModelStub::class;
     }
 }
