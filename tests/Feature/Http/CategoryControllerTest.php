@@ -11,8 +11,6 @@ use Tests\TestCase;
 class CategoryControllerTest extends TestCase
 {
 
-    use DatabaseMigrations;
-
     public function testIndex()
     {
         $category = factory(Category::class)->create();

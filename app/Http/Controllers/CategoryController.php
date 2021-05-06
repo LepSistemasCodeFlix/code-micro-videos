@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class CategoryController extends BaseController
 {
 
     private $rules = [
@@ -13,9 +13,9 @@ class CategoryController extends Controller
         'is_active' => 'boolean'
     ];
 
-    public function index()
+    protected function model()
     {
-        return Category::all();
+        return Category::class;
     }
 
     public function store(Request $request)
